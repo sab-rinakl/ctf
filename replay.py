@@ -3,7 +3,7 @@ from scapy.all import *
 # IP of the target
 target_ip = "192.168.1.3"  # Please replace this with the actual target IP
 # Target port
-target_port = 12345  # Replace with the actual port
+target_port = 80
 
 # Dummy packet data that we're 'replaying'
 packet_data = "This is the packet data we intercepted and are re-sending."

@@ -2,7 +2,7 @@ import socket
 
 # IP and port of the target
 target_ip = "1.0.0.0"
-target_port = 9999
+target_port = 80
 
 # Creating a socket object
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

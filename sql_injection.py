@@ -9,7 +9,7 @@ payloads = [
     "' OR ''='"
 ]
 
-url = 'blueserver/login.php'
+url = 'https://blueserver/login.php'
 
 for payload in payloads:
     data_dict = {
