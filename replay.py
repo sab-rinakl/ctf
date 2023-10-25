@@ -1,8 +1,6 @@
 from scapy.all import *
 
-# IP of the target
-target_ip = "192.168.1.3"  # Please replace this with the actual target IP
-# Target port
+target_ip = "blueserver"  
 target_port = 80
 
 # Dummy packet data that we're 'replaying'

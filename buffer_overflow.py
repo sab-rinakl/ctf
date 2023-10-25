@@ -1,7 +1,7 @@
 import socket
 import sys
 
-target_ip = "1.0.0.0"
+target_ip = "blueserver"
 target_port = 80
 
 buffer = ['\x41']
