@@ -8,7 +8,7 @@ def packet_callback(packet):
     global intercepted_packet
     intercepted_packet = packet
 
-def send_intercepted_packet(target_ip, target_port, times=1):
+def send_intercepted_packet(times=1):
     if intercepted_packet:
         intercepted_packet[IP].dst = target_ip
         intercepted_packet[TCP].dport = target_port
@@ -21,7 +21,7 @@ def send_intercepted_packet(target_ip, target_port, times=1):
 def main():
     try:
         sniff(filter="tcp", prn=packet_callback, count=1)
-        send_intercepted_packet(target_ip, target_port, times=5) 
+        send_intercepted_packet(times=5) 
     except KeyboardInterrupt:
         print("\nProcess stopped.")
 
